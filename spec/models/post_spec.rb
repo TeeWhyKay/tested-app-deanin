@@ -18,7 +18,10 @@ RSpec.describe Post, type: :model do
   end
 
   it 'has a body' do
-
+    post = Post.new(title: 'valid title', body: '', user: current_user, views: 0)
+    expect(post).to_not be_valid
+    post.body = 'A valid body'
+    expect(post).to be_valid
   end
 
 
