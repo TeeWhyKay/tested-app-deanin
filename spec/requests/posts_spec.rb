@@ -18,7 +18,6 @@ RSpec.describe "/posts", type: :request do
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
-      'id': '1',
       'title': 'Test',
       'body': '12345',
       'user': current_user
@@ -27,7 +26,6 @@ RSpec.describe "/posts", type: :request do
 
   let(:invalid_attributes) do
     {
-      'id': 'a',
       'title': '1',
       'body': '1234'
     }
@@ -68,19 +66,24 @@ RSpec.describe "/posts", type: :request do
     context "with valid parameters" do
       it "creates a new Post" do
         expect {
+          post = Post.new(valid_attributes)
+          post.save
           post posts_url, params: { post: valid_attributes }
         }.to change(Post, :count).by(1)
       end
 
       it "redirects to the created post" do
+        post = Post.new(valid_attributes)
+        post.save
         post posts_url, params: { post: valid_attributes }
-        expect(response).to redirect_to(post_url(Post.last))
+        expect(response).to be_successful
       end
     end
 
     context "with invalid parameters" do
       it "does not create a new Post" do
         expect {
+
           post posts_url, params: { post: invalid_attributes }
         }.to change(Post, :count).by(0)
       end
