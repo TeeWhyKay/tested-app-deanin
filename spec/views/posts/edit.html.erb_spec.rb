@@ -6,7 +6,7 @@ RSpec.describe "posts/edit", type: :view do
     @post = assign(:post, Post.create!(
       title: "MyString",
       body: "MyText",
-      user: nil,
+      user: current_user,
       views: 1
     ))
   end
